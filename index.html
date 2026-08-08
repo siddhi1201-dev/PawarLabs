@@ -1,46 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lab Report Generator</title>
+  <title>Pawar Labs - Haemogram Live Report Studio</title>
   <style>
     :root {
-      --bg: #edf3f9;
+      --bg: #eef3f8;
+      --ink: #192437;
+      --muted: #5d6b84;
+      --line: #d3dcea;
+      --brand: #0d5db8;
+      --brand-2: #1d7be0;
       --panel: #ffffff;
-      --panel-2: #f8fbff;
-      --ink: #172033;
-      --muted: #5a6780;
-      --line: #d5deea;
-      --brand: #1f4b86;
-      --brand-2: #2f7ad8;
-      --accent: #e8f1ff;
-      --shadow: 0 16px 40px rgba(15, 23, 42, 0.10);
-      --radius: 22px;
+      --panel-soft: #f7faff;
+      --shadow: 0 18px 40px rgba(16, 30, 53, 0.12);
+      --radius: 20px;
     }
 
-    * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
+      min-height: 100vh;
       font-family: "Segoe UI", Arial, sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(47, 122, 216, 0.12), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(31, 75, 134, 0.08), transparent 35%),
+        radial-gradient(circle at 10% -10%, rgba(13, 93, 184, 0.16), transparent 35%),
+        radial-gradient(circle at 100% 10%, rgba(29, 123, 224, 0.14), transparent 30%),
         var(--bg);
     }
 
     .shell {
-      max-width: 1480px;
+      max-width: 1360px;
       margin: 0 auto;
-      padding: 26px;
+      padding: 24px;
     }
 
     .hero {
       display: flex;
-      align-items: flex-end;
       justify-content: space-between;
-      gap: 20px;
+      align-items: flex-end;
+      gap: 16px;
       margin-bottom: 22px;
     }
 
@@ -49,239 +53,1078 @@
       font-size: clamp(28px, 3vw, 42px);
       line-height: 1.05;
       letter-spacing: -0.03em;
-      color: var(--brand);
+      color: #134684;
     }
 
     .hero p {
       margin: 10px 0 0;
       color: var(--muted);
-      max-width: 760px;
+      max-width: 720px;
       font-size: 15px;
     }
 
-    .hero-badge {
-      padding: 12px 16px;
-      border-radius: 999px;
+    .hero-chip {
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.78);
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: 999px;
+      padding: 10px 14px;
       color: var(--muted);
       box-shadow: var(--shadow);
       white-space: nowrap;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: minmax(380px, 520px) minmax(420px, 1fr);
-      gap: 22px;
-      align-items: start;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.94);
-      border: 1px solid rgba(213, 222, 234, 0.9);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      backdrop-filter: blur(8px);
-    }
-
-    .card-header {
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(232,241,255,0.9), rgba(248,251,255,1));
-    }
-
-    .card-header h2 {
-      margin: 0;
-      font-size: 17px;
-      color: var(--brand);
-    }
-
-    .card-header .sub {
-      margin-top: 5px;
-      color: var(--muted);
       font-size: 13px;
+      font-weight: 600;
     }
 
-    .card-body { padding: 18px 20px 20px; }
-
-    .form-grid {
+    .report-cards {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 22px;
     }
 
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field.full { grid-column: 1 / -1; }
-    label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.01em; }
-
-    input, textarea, select {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #fff;
-      padding: 12px 14px;
-      font: inherit;
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
-    }
-
-    textarea { min-height: 104px; resize: vertical; }
-    input:focus, textarea:focus, select:focus {
-      border-color: rgba(47, 122, 216, 0.9);
-      box-shadow: 0 0 0 4px rgba(47, 122, 216, 0.12);
-    }
-
-    .actions {
+    .report-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid #d7e1ee;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 18px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
+      flex-direction: column;
+      min-height: 188px;
+    }
+
+    .report-card h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #144a8a;
+    }
+
+    .report-card p {
+      margin: 8px 0 16px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+      flex-grow: 1;
+    }
+
+    .card-tag {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f5aaf;
+      background: #e9f2ff;
+      border: 1px solid #cfe0fb;
     }
 
     .btn {
       border: 0;
-      border-radius: 14px;
-      padding: 12px 16px;
+      border-radius: 12px;
+      padding: 11px 15px;
       font: inherit;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .btn:hover { transform: translateY(-1px); }
-    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #fff; box-shadow: 0 10px 24px rgba(31, 75, 134, 0.22); }
-    .btn.secondary { background: #eef3fb; color: var(--brand); border: 1px solid var(--line); }
-
-    .status {
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: #f7fbff;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 13px;
+    .btn:hover {
+      transform: translateY(-1px);
     }
 
-    .preview-wrap { padding: 18px 20px 20px; }
-    .preview-frame {
-      background: #dfe8f5;
-      border-radius: 18px;
-      padding: 20px;
-      overflow: auto;
-      min-height: 860px;
+    .btn.primary {
+      color: white;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      box-shadow: 0 8px 18px rgba(13, 93, 184, 0.28);
     }
 
-    .preview-actions {
+    .btn.secondary {
+      color: #18437a;
+      background: #e9f1fb;
+      border: 1px solid #c7d8ee;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Single panel full-width layout for direct report editing */
+    .workspace-single {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #d7e1ee;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #edf4ff, #f9fbff);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .panel-head h3 {
+      margin: 0;
+      color: #164d8f;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-head .sub {
+      margin-top: 3px;
       color: var(--muted);
       font-size: 13px;
     }
 
-    iframe {
-      width: 100%;
-      min-height: 800px;
-      border: 0;
+    .panel-body {
+      padding: 20px;
+    }
+
+    .workspace-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      background: #f0f6ff;
+      border: 1px solid #d0e2ff;
+      border-radius: 14px;
+      padding: 12px 16px;
+      flex-wrap: wrap;
+    }
+
+    .top-hint {
+      color: #1a4d87;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Interactive Live Report Paper Styling */
+    .report-paper-container {
+      background: #dce8f8;
       border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .report-paper {
+      width: 100%;
+      max-width: 800px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 12px 36px rgba(15, 23, 42, 0.12);
+      padding: 28px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #1f2937;
+    }
+
+    .paper-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      border-bottom: 2px solid #0d5db8;
+      padding-bottom: 14px;
+    }
+
+    .paper-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .paper-title h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #0d5db8;
+      letter-spacing: -0.02em;
+    }
+
+    .paper-title p {
+      margin: 3px 0 0 0;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .lab-badge {
+      text-align: right;
+      color: #64748b;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .section-banner {
+      margin: 16px 0 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #dbeafe;
+      color: #0d5db8;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* Demographics Grid */
+    .demographics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 16px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 12px;
+    }
+
+    .demo-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px dashed #e2e8f0;
+      padding-bottom: 4px;
+    }
+
+    .demo-item label {
+      font-weight: 700;
+      color: #1e3a8a;
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+
+    /* Smear Reports Grid - Single Column (One below another) */
+    .smear-reports-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 12px;
+    }
+
+    .smear-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px dashed #e2e8f0;
+      padding-bottom: 4px;
+    }
+
+    .smear-item label {
+      font-weight: 700;
+      color: #1e3a8a;
+      white-space: nowrap;
+      margin-right: 8px;
+      min-width: 130px;
+    }
+
+    /* Live Input Fields styling */
+    .live-edit {
+      border: 1px transparent solid;
+      background: transparent;
+      font: inherit;
+      font-size: 12px;
+      color: #0f172a;
+      padding: 3px 6px;
+      border-radius: 4px;
+      transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      width: 100%;
+    }
+
+    .demo-item .live-edit {
+      text-align: right;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .live-edit:hover {
+      background: #eef6ff;
+      border-color: #93c5fd;
+    }
+
+    .live-edit:focus {
+      background: #ffffff;
+      border-color: #2563eb;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    /* Observed values input styling inside table */
+    .table-val-input {
+      width: 90px;
+      text-align: center;
+      font-weight: 700;
+      border: 1px solid #cbd5e1;
       background: #fff;
-      box-shadow: 0 8px 26px rgba(15, 23, 42, 0.12);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #1e293b;
+      transition: all 0.15s ease;
     }
 
-    @media (max-width: 1080px) {
-      .grid { grid-template-columns: 1fr; }
-      .hero { flex-direction: column; align-items: flex-start; }
+    .table-val-input:hover {
+      border-color: #3b82f6;
+      background: #f8fafc;
     }
 
-    @media (max-width: 720px) {
-      .shell { padding: 14px; }
-      .form-grid { grid-template-columns: 1fr; }
-      .preview-frame { min-height: 680px; }
+    .table-val-input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      outline: none;
+      background: #fff;
+    }
+
+    .table-val-input.is-high {
+      color: #dc2626;
+      border-color: #fca5a5;
+      background: #fef2f2;
+    }
+
+    .table-val-input.is-low {
+      color: #2563eb;
+      border-color: #93c5fd;
+      background: #eff6ff;
+    }
+
+    /* Table styling */
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+    }
+
+    .report-table th,
+    .report-table td {
+      border: 1px solid #cbd5e1;
+      padding: 7px 10px;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .report-table th {
+      background: #e8f1fc;
+      color: #164d8f;
+      font-weight: 700;
+    }
+
+    .table-sec-header {
+      background: #f0f6ff;
+      font-weight: 700;
+      color: #174b88;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 7px 10px;
+    }
+
+    /* Badges */
+    .badge-normal {
+      display: inline-block;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .badge-high {
+      display: inline-block;
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 10px;
+    }
+
+    .badge-low {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #93c5fd;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 10px;
+    }
+
+    /* Notes Area */
+    .notes-box {
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+    }
+
+    .notes-box textarea {
+      width: 100%;
+      min-height: 55px;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 12px;
+      color: #334155;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+    }
+
+    .notes-box textarea:hover,
+    .notes-box textarea:focus {
+      background: #ffffff;
+      border-radius: 4px;
+    }
+
+    /* Footer */
+    .paper-footer {
+      margin-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      color: #64748b;
+      font-size: 11px;
+    }
+
+    .doctor-sign-block {
+      text-align: right;
+      font-size: 12px;
+      color: #1e293b;
+    }
+
+    .doctor-sign-block strong {
+      color: #0d5db8;
+      font-size: 13px;
+    }
+
+    .status-toast {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      background: var(--panel-soft);
+      color: var(--muted);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 13px;
+    }
+
+    /* PDF Print Clean Styling */
+    .report-paper.printing-active .table-val-input {
+      border: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    .report-paper.printing-active .live-edit {
+      border: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    .report-paper.printing-active .notes-box textarea {
+      border: none !important;
+      background: transparent !important;
+    }
+
+    @media (max-width: 860px) {
+      .report-paper {
+        padding: 16px;
+      }
+
+      .demographics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .shell {
+        padding: 14px;
+      }
+
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="shell">
-    <div class="hero">
+    <header class="hero">
       <div>
-        <h1>Lab Report Generator</h1>
-        <p>Enter the report details, preview the finished HTML report instantly, and download the generated report file from your browser.</p>
+        <h1>Pawar Labs Report Studio</h1>
+        <p>Interactive pathology lab report editor — edit patient details &amp; observed values directly in the live
+          report preview.</p>
       </div>
-      <div class="hero-badge">Standalone HTML · No Python · Local-only</div>
-    </div>
+      <div class="hero-chip">Live Report Editor</div>
+    </header>
 
-    <div class="grid">
-      <section class="card">
-        <div class="card-header">
-          <h2>Report Inputs</h2>
-          <div class="sub">Fill in the fields below to generate a fixed lab report layout.</div>
+    <!-- REPORT CARDS SECTION -->
+    <section id="landing" class="report-cards">
+      <article class="report-card">
+        <span class="card-tag">HEMATOLOGY</span>
+        <h2>Haemogram (CBC)</h2>
+        <p>Complete Blood Count with Differential Count (DLC), Red Cell Indices &amp; Reference Ranges.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 6px 0 14px;">
+          <span
+            style="background:#eef4fd; border:1px solid #cce0f9; font-size:11px; padding:3px 8px; border-radius:12px; color:#164d8f; font-weight:600;">Hb
+            / RBC / WBC</span>
+          <span
+            style="background:#eef4fd; border:1px solid #cce0f9; font-size:11px; padding:3px 8px; border-radius:12px; color:#164d8f; font-weight:600;">DLC
+            Differential</span>
+          <span
+            style="background:#eef4fd; border:1px solid #cce0f9; font-size:11px; padding:3px 8px; border-radius:12px; color:#164d8f; font-weight:600;">RBC
+            Indices</span>
+          <span
+            style="background:#eef4fd; border:1px solid #cce0f9; font-size:11px; padding:3px 8px; border-radius:12px; color:#164d8f; font-weight:600;">Auto
+            High/Low Flagging</span>
         </div>
-        <div class="card-body">
-          <div class="form-grid">
-            <div class="field"><label for="patientName">Patient Name</label><input id="patientName" type="text" placeholder="Enter patient name"></div>
-            <div class="field"><label for="patientId">Patient ID</label><input id="patientId" type="text" placeholder="Enter patient ID"></div>
-            <div class="field"><label for="age">Age</label><input id="age" type="text" placeholder="Enter age"></div>
-            <div class="field"><label for="sex">Sex</label><input id="sex" type="text" placeholder="Enter sex"></div>
-            <div class="field"><label for="sampleType">Sample Type</label><input id="sampleType" type="text" placeholder="Example: Blood"></div>
-            <div class="field"><label for="testName">Test Name</label><input id="testName" type="text" placeholder="Enter test name"></div>
-            <div class="field"><label for="result">Result</label><input id="result" type="text" placeholder="Enter result"></div>
-            <div class="field"><label for="unit">Unit</label><input id="unit" type="text" placeholder="Enter unit"></div>
-            <div class="field"><label for="referenceRange">Reference Range</label><input id="referenceRange" type="text" placeholder="Enter normal range"></div>
-            <div class="field"><label for="doctorName">Doctor Name</label><input id="doctorName" type="text" placeholder="Enter doctor name"></div>
-            <div class="field"><label for="department">Department</label><input id="department" type="text" placeholder="Enter department"></div>
-            <div class="field"><label for="collectionDate">Collection Date</label><input id="collectionDate" type="date"></div>
-            <div class="field"><label for="reportDate">Report Date</label><input id="reportDate" type="date"></div>
-            <div class="field full"><label for="notes">Notes</label><textarea id="notes" placeholder="Add clinical notes, interpretation, or remarks"></textarea></div>
+        <button class="btn primary" data-open-report="haemogram">Open Haemogram Studio</button>
+      </article>
+
+      <article class="report-card">
+        <span class="card-tag">BIOCHEMISTRY</span>
+        <h2>Biochemical Report</h2>
+        <p>Biochemistry panel report for glucose, urea, creatinine, and liver-related values.</p>
+        <button class="btn primary" data-open-report="biochemical">Open Biochemical</button>
+      </article>
+
+      <article class="report-card">
+        <span class="card-tag">MICROBIOLOGY</span>
+        <h2>Antibiotics Sensitivity Report</h2>
+        <p>Culture and sensitivity report with organism details and antibiotic response.</p>
+        <button class="btn primary" data-open-report="sensitivity">Open Sensitivity</button>
+      </article>
+    </section>
+
+    <!-- LIVE REPORT WORKSPACE (SINGLE PANEL, DIRECT INLINE EDITING) -->
+    <section id="workspace" class="workspace-single hidden">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h3 id="reportTitleHeader">Haemogram (CBC) Live Editor</h3>
+            <div class="sub">Click directly on any detail or value in the report to edit.</div>
+          </div>
+          <div class="top-actions">
+            <button class="btn primary" id="downloadBtn" type="button">📥 Download PDF</button>
+            <button class="btn secondary" id="resetBtn" type="button">🔄 Reset Defaults</button>
+            <button class="btn secondary" id="backBtn" type="button">← Back to Cards</button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="workspace-top-bar">
+            <div class="top-hint">
+              <span>✏️ Direct Live Editing Active: Values automatically recalculate HIGH / LOW status.</span>
+            </div>
+            <div style="font-size:12px; color:#5d6b84;">
+              Export file: <strong id="pdfFilenameHint" style="color:#0d5db8;">lab_report.pdf</strong>
+            </div>
           </div>
 
-          <div class="actions">
-            <button class="btn primary" id="previewBtn" type="button">Update Preview</button>
-            <button class="btn secondary" id="downloadBtn" type="button">Download HTML</button>
-            <button class="btn secondary" id="resetBtn" type="button">Reset Form</button>
+          <!-- DIRECT INTERACTIVE REPORT PAPER SHEET -->
+          <div class="report-paper-container">
+            <div class="report-paper" id="haemogramReportSheet">
+              <!-- PAPER HEADER -->
+              <div class="paper-header">
+                <div class="paper-header-left">
+                  <div id="logoContainer"></div>
+                  <div class="paper-title">
+                    <h1>PAWAR PATHOLOGY LABS</h1>
+                    <p id="reportSubHeaderTitle">HAEMOGRAM - COMPLETE BLOOD COUNT (CBC)</p>
+                  </div>
+                </div>
+                <div class="lab-badge">
+                  <strong>Accredited Diagnostic Centre</strong><br>
+                  ISO 9001:2015 Certified<br>
+                  Phone: +91 98765 43210
+                </div>
+              </div>
+
+              <!-- DEMOGRAPHICS SECTION -->
+              <div class="section-banner">Patient Demographics</div>
+              <div class="demographics-grid">
+                <div class="demo-item">
+                  <label for="ownerName">Name of Owner:</label>
+                  <input type="text" class="live-edit" id="ownerName" value="" placeholder="Enter owner name">
+                </div>
+                <div class="demo-item">
+                  <label for="address">Address:</label>
+                  <input type="text" class="live-edit" id="address" value="" placeholder="Enter address">
+                </div>
+                <div class="demo-item">
+                  <label for="mobileNo">Mobile No:</label>
+                  <input type="text" class="live-edit" id="mobileNo" value="" placeholder="Enter mobile number">
+                </div>
+                <div class="demo-item">
+                  <label for="speciesBreed">Species / Breed:</label>
+                  <select class="live-edit" id="speciesBreed">
+                    <option value="" disabled selected>Select species</option>
+                    <option value="BOVINE">BOVINE</option>
+                    <option value="CANINE">CANINE</option>
+                    <option value="FELINE">FELINE</option>
+                    <option value="OVINE">OVINE</option>
+                    <option value="CAPRINE">CAPRINE</option>
+                    <option value="EQUINE">EQUINE</option>
+                  </select>
+                </div>
+                <div class="demo-item">
+                  <label for="doctorName">Ref by DR:</label>
+                  <input type="text" class="live-edit" id="doctorName" value="" placeholder="Enter doctor name">
+                </div>
+                <div class="demo-item">
+                  <label for="age">Age / Sex:</label>
+                  <div style="display:flex; gap:6px; align-items:center; width:100%;">
+                    <input type="text" class="live-edit" id="age" value="" style="width:60%;" placeholder="Age">
+                    <select class="live-edit" id="sex" style="width:40%;">
+                      <option value="" disabled selected>Sex</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="demo-item">
+                  <label for="reportDate">Date:</label>
+                  <input type="date" class="live-edit" id="reportDate">
+                </div>
+                <div class="demo-item" style="grid-column: 1 / -1;">
+                  <label for="history">History:</label>
+                  <input type="text" class="live-edit" id="history" value="" placeholder="Enter clinical history"
+                    style="flex:1;">
+                </div>
+              </div>
+
+              <!-- INVESTIGATION RESULTS TABLE -->
+              <div class="section-banner">Investigation Results</div>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th style="width:38%;">TEST PARAMETER</th>
+                    <th style="width:20%; text-align:center;">OBSERVED VALUE</th>
+                    <th style="width:16%; text-align:center;">STATUS</th>
+                    <th style="width:13%; text-align:center;">UNIT</th>
+                    <th style="width:13%;">REF. RANGE</th>
+                  </tr>
+                </thead>
+                <tbody id="haemogramTableBody">
+                  <!-- PRIMARY HAEMOGRAM -->
+                  <tr>
+                    <td colspan="5" class="table-sec-header">PRIMARY HAEMOGRAM</td>
+                  </tr>
+                  <tr>
+                    <td>Haemoglobin</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="hemoglobin" data-min="12.0" data-max="19.0"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-hemoglobin">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-hemoglobin">g/dL</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-hemoglobin">12 - 19</td>
+                  </tr>
+                  <tr>
+                    <td>Erythrocytes (RBC)</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="rbc" data-min="5.0" data-max="9.0" value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-rbc">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-rbc">×10⁶/µL</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-rbc">5 - 9</td>
+                  </tr>
+                  <tr>
+                    <td>Total leukocytes (WBC)</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="wbc" data-min="5.0" data-max="15.0" value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-wbc">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-wbc">×10³/µL</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-wbc">5 - 15</td>
+                  </tr>
+
+                  <!-- DIFFERENTIAL LEUCOCYTE COUNT -->
+                  <tr>
+                    <td colspan="5" class="table-sec-header">DIFFERENTIAL LEUCOCYTE COUNT (DLC)</td>
+                  </tr>
+                  <tr>
+                    <td>Neutrophils</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="neutrophils" data-min="60" data-max="75"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-neutrophils">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-neutrophils">%</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-neutrophils">60 - 75</td>
+                  </tr>
+                  <tr>
+                    <td>Lymphocytes</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="lymphocytes" data-min="18" data-max="21"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-lymphocytes">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-lymphocytes">%</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-lymphocytes">18 - 21</td>
+                  </tr>
+                  <tr>
+                    <td>Monocytes</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="monocytes" data-min="2" data-max="10"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-monocytes">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-monocytes">%</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-monocytes">2 - 10</td>
+                  </tr>
+                  <tr>
+                    <td>Eosinophils</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="eosinophils" data-min="0" data-max="9"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-eosinophils">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-eosinophils">%</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-eosinophils">0 - 9</td>
+                  </tr>
+                  <tr>
+                    <td>Basophils</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="basophils" data-min="0" data-max="1"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-basophils">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-basophils">%</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-basophils">0 - 1</td>
+                  </tr>
+
+                  <!-- RED CELL INDICES -->
+                  <tr>
+                    <td colspan="5" class="table-sec-header">RED CELL INDICES</td>
+                  </tr>
+                  <tr>
+                    <td>Hematocrit (HCT)</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="hct" data-min="37.0" data-max="57.0"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-hct">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-hct">%</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-hct">37 - 57</td>
+                  </tr>
+                  <tr>
+                    <td>MCV (Mean corpuscular volume)</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="mcv" data-min="66.0" data-max="77.0"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-mcv">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-mcv">fL</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-mcv">66 - 77</td>
+                  </tr>
+                  <tr>
+                    <td>MCH (Mean corpuscular haemoglobin)</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="mch" data-min="21.0" data-max="26.0"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-mch">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-mch">pg</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-mch">21 - 26</td>
+                  </tr>
+                  <tr>
+                    <td>MCHC (Mean corpuscular haemoglobin concentration)</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="mchc" data-min="32.0" data-max="36.0"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-mchc">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-mchc">g/dL</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-mchc">32 - 36</td>
+                  </tr>
+
+                  <!-- PLATELET INDICES -->
+                  <tr>
+                    <td colspan="5" class="table-sec-header">PLATELET INDICES</td>
+                  </tr>
+                  <tr>
+                    <td>Platelets</td>
+                    <td style="text-align:center;">
+                      <input type="text" class="table-val-input" data-key="platelets" data-min="1.6" data-max="5.1"
+                        value="">
+                    </td>
+                    <td style="text-align:center;"><span class="badge-normal" id="flag-platelets">NORMAL</span></td>
+                    <td style="text-align:center; color:#475569; font-size:11px;" id="unit-platelets">×10⁵/µL</td>
+                    <td style="color:#475569; font-size:11px;" id="ref-platelets">1.6 - 5.1</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- BLOOD SMEAR REPORTS SECTION -->
+              <div class="section-banner">Blood Smear Reports</div>
+              <div class="smear-reports-grid">
+                <div class="smear-item">
+                  <label for="rbcMorphology">RBC Morphology:</label>
+                  <input type="text" class="live-edit" id="rbcMorphology" value=""
+                    placeholder="Enter RBC morphology (manually filled)" style="flex:1;">
+                </div>
+                <div class="smear-item">
+                  <label for="wbcMorphology">WBC Morphology:</label>
+                  <input type="text" class="live-edit" id="wbcMorphology" value=""
+                    placeholder="Enter WBC morphology (manually filled)" style="flex:1;">
+                </div>
+                <div class="smear-item">
+                  <label for="plateletSmear">Platelets:</label>
+                  <input type="text" class="live-edit" id="plateletSmear" value=""
+                    placeholder="Enter platelet findings (manually filled)" style="flex:1;">
+                </div>
+                <div class="smear-item">
+                  <label for="protozoa">Protozoa:</label>
+                  <input type="text" class="live-edit" id="protozoa" value=""
+                    placeholder="Enter protozoa findings (manually filled)" style="flex:1;">
+                </div>
+                <div class="smear-item">
+                  <label for="diagnosis">Diagnosis:</label>
+                  <input type="text" class="live-edit" id="diagnosis" value=""
+                    placeholder="Enter diagnosis (manually filled)" style="flex:1;">
+                </div>
+              </div>
+
+              <!-- FOOTER & SIGNATURE SECTION -->
+              <div class="paper-footer-section" style="margin-top:20px;">
+                <!-- DOCTOR SIGNATURE BLOCK (RIGHT ALIGNED ABOVE DIVIDER) -->
+                <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:10px;">
+                  <div style="font-size:11px; color:#64748b;" id="reportGeneratedTime">
+                    Report Generated: Live Preview
+                  </div>
+                  <div style="text-align:right; font-size:12px; color:#1e293b;">
+                    <div style="height:45px;"></div> <!-- Space for Signature -->
+                    <strong style="color:#0d5db8; font-size:13px;">DR VT Pawar</strong><br>
+                    <span>M.V.Sc (Veterinary Pathology)</span><br>
+                    <span style="font-size:11px; color:#475569;">Reg.No : MSVC,3875</span>
+                  </div>
+                </div>
+
+                <!-- DIVIDER LINE -->
+                <div style="border-top:1px solid #cbd5e1; margin:10px 0 10px;"></div>
+
+                <!-- NOTES FOOTER -->
+                <div style="font-size:11px; color:#475569; line-height:1.45;">
+                  <strong style="color:#1e3a8a;">Notes:</strong>
+                  <ul style="margin:4px 0 0 0; padding-left:18px;">
+                    <li>Kindly correlate with lab findings with clinical signs. The reports/results are for the
+                      referring doctor’s information only.</li>
+                    <li>Test results pertained to the sample received in lab.</li>
+                    <li>Blood protozoa can be confirmed through PCR.</li>
+                    <li>The reports are not valid for medicolegal/veterolegal purpose.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="status" id="statusBox">Ready to generate the report.</div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="card-header">
-          <h2>Live Preview</h2>
-          <div class="sub">This is the fixed HTML report layout that will be downloaded.</div>
-        </div>
-        <div class="preview-wrap">
-          <div class="preview-actions">
-            <span>Preview updates as you edit and click Update Preview.</span>
-            <span id="fileNameHint">lab_report.html</span>
-          </div>
-          <div class="preview-frame">
-            <iframe id="previewFrame" title="Report preview"></iframe>
+          <div class="status-toast" id="statusToast">
+            Live report editing active. Changes reflect directly on PDF export.
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script>
-    const fieldIds = [
-      "patientName", "patientId", "age", "sex", "sampleType", "testName", "result",
-      "unit", "referenceRange", "doctorName", "department", "collectionDate",
-      "reportDate", "notes"
-    ];
-
-    const elements = Object.fromEntries(fieldIds.map((id) => [id, document.getElementById(id)]));
-    const previewFrame = document.getElementById("previewFrame");
-    const statusBox = document.getElementById("statusBox");
-    const fileNameHint = document.getElementById("fileNameHint");
     const { jsPDF } = window.jspdf;
 
-    const logoDataUri = (() => {
+    const defaultHaemogramData = {
+      ownerName: "",
+      address: "",
+      mobileNo: "",
+      speciesBreed: "",
+      doctorName: "",
+      age: "",
+      sex: "",
+      history: "",
+      hemoglobin: "",
+      rbc: "",
+      wbc: "",
+      neutrophils: "",
+      lymphocytes: "",
+      monocytes: "",
+      eosinophils: "",
+      basophils: "",
+      hct: "",
+      mcv: "",
+      mch: "",
+      mchc: "",
+      platelets: "",
+      rbcMorphology: "",
+      wbcMorphology: "",
+      plateletSmear: "",
+      protozoa: "",
+      diagnosis: "",
+      notes: ""
+    };
+
+    const speciesReferenceRanges = {
+      Canine: {
+        rbc: { min: 5.0, max: 9.0, unit: "×10⁶/µL", refText: "5 - 9" },
+        hemoglobin: { min: 12.0, max: 19.0, unit: "g/dL", refText: "12 - 19" },
+        hct: { min: 37.0, max: 57.0, unit: "%", refText: "37 - 57" },
+        mcv: { min: 66.0, max: 77.0, unit: "fL", refText: "66 - 77" },
+        mch: { min: 21.0, max: 26.0, unit: "pg", refText: "21 - 26" },
+        mchc: { min: 32.0, max: 36.0, unit: "g/dL", refText: "32 - 36" },
+        platelets: { min: 1.6, max: 5.1, unit: "×10⁵/µL", refText: "1.6 - 5.1" },
+        wbc: { min: 5.0, max: 15.0, unit: "×10³/µL", refText: "5 - 15" },
+        neutrophils: { min: 60, max: 75, unit: "%", refText: "60 - 75" },
+        lymphocytes: { min: 18, max: 21, unit: "%", refText: "18 - 21" },
+        monocytes: { min: 2, max: 10, unit: "%", refText: "2 - 10" },
+        eosinophils: { min: 0, max: 9, unit: "%", refText: "0 - 9" },
+        basophils: { min: 0, max: 1, unit: "%", refText: "0 - 1" }
+      },
+      Feline: {
+        rbc: { min: 5.0, max: 10.0, unit: "×10⁶/µL", refText: "5 - 10" },
+        hemoglobin: { min: 9.8, max: 15.4, unit: "g/dL", refText: "9.8 - 15.4" },
+        hct: { min: 29.0, max: 45.0, unit: "%", refText: "29 - 45" },
+        mcv: { min: 41.0, max: 54.0, unit: "fL", refText: "41 - 54" },
+        mch: { min: 13.0, max: 17.0, unit: "pg", refText: "13 - 17" },
+        mchc: { min: 31.0, max: 36.0, unit: "g/dL", refText: "31 - 36" },
+        platelets: { min: 2.3, max: 6.8, unit: "×10⁵/µL", refText: "2.3 - 6.8" },
+        wbc: { min: 5.5, max: 19.5, unit: "×10³/µL", refText: "5.5 - 19.5" },
+        neutrophils: { min: 35, max: 75, unit: "%", refText: "35 - 75" },
+        lymphocytes: { min: 27, max: 36, unit: "%", refText: "27 - 36" },
+        monocytes: { min: 0, max: 5, unit: "%", refText: "0 - 5" },
+        eosinophils: { min: 0, max: 4, unit: "%", refText: "0 - 4" },
+        basophils: { min: 0, max: 1, unit: "%", refText: "0 - 1" }
+      },
+      Bovine: {
+        rbc: { min: 5.0, max: 10.0, unit: "×10⁶/µL", refText: "5 - 10" },
+        hemoglobin: { min: 8.0, max: 15.0, unit: "g/dL", refText: "8 - 15" },
+        hct: { min: 24.0, max: 46.0, unit: "%", refText: "24 - 46" },
+        mcv: { min: 40.0, max: 60.0, unit: "fL", refText: "40 - 60" },
+        mch: { min: 11.0, max: 17.0, unit: "pg", refText: "11 - 17" },
+        mchc: { min: 30.0, max: 36.0, unit: "g/dL", refText: "30 - 36" },
+        platelets: { min: 1.0, max: 8.0, unit: "×10⁵/µL", refText: "1 - 8" },
+        wbc: { min: 4.0, max: 12.0, unit: "×10³/µL", refText: "4 - 12" },
+        neutrophils: { min: 15, max: 45, unit: "%", refText: "15 - 45" },
+        lymphocytes: { min: 48, max: 75, unit: "%", refText: "48 - 75" },
+        monocytes: { min: 2, max: 7, unit: "%", refText: "2 - 7" },
+        eosinophils: { min: 2, max: 15, unit: "%", refText: "2 - 15" },
+        basophils: { min: 0, max: 2, unit: "%", refText: "0 - 2" }
+      },
+      Ovine: {
+        rbc: { min: 9.0, max: 15.0, unit: "×10⁶/µL", refText: "9 - 15" },
+        hemoglobin: { min: 9.0, max: 15.0, unit: "g/dL", refText: "9 - 15" },
+        hct: { min: 27.0, max: 45.0, unit: "%", refText: "27 - 45" },
+        mcv: { min: 28.0, max: 40.0, unit: "fL", refText: "28 - 40" },
+        mch: { min: 8.0, max: 12.0, unit: "pg", refText: "8 - 12" },
+        mchc: { min: 31.0, max: 34.0, unit: "g/dL", refText: "31 - 34" },
+        platelets: { min: 2.5, max: 7.5, unit: "×10⁵/µL", refText: "2.5 - 7.5" },
+        wbc: { min: 4.0, max: 12.0, unit: "×10³/µL", refText: "4 - 12" },
+        neutrophils: { min: 10, max: 50, unit: "%", refText: "10 - 50" },
+        lymphocytes: { min: 40, max: 75, unit: "%", refText: "40 - 75" },
+        monocytes: { min: 1, max: 5, unit: "%", refText: "1 - 5" },
+        eosinophils: { min: 1, max: 8, unit: "%", refText: "1 - 8" },
+        basophils: { min: 0, max: 3, unit: "%", refText: "0 - 3" }
+      },
+      Caprine: {
+        rbc: { min: 8.0, max: 18.0, unit: "×10⁶/µL", refText: "8 - 18" },
+        hemoglobin: { min: 8.0, max: 12.0, unit: "g/dL", refText: "8 - 12" },
+        hct: { min: 22.0, max: 38.0, unit: "%", refText: "22 - 38" },
+        mcv: { min: 16.0, max: 25.0, unit: "fL", refText: "16 - 25" },
+        mch: { min: 5.2, max: 8.0, unit: "pg", refText: "5.2 - 8" },
+        mchc: { min: 30.0, max: 36.0, unit: "g/dL", refText: "30 - 36" },
+        platelets: { min: 3.0, max: 6.0, unit: "×10⁵/µL", refText: "3 - 6" },
+        wbc: { min: 4.0, max: 13.0, unit: "×10³/µL", refText: "4 - 13" },
+        neutrophils: { min: 30, max: 48, unit: "%", refText: "30 - 48" },
+        lymphocytes: { min: 50, max: 70, unit: "%", refText: "50 - 70" },
+        monocytes: { min: 1, max: 4, unit: "%", refText: "1 - 4" },
+        eosinophils: { min: 3, max: 8, unit: "%", refText: "3 - 8" },
+        basophils: { min: 0, max: 2, unit: "%", refText: "0 - 2" }
+      },
+      Equine: {
+        rbc: { min: 6.8, max: 12.9, unit: "×10⁶/µL", refText: "6.8 - 12.9" },
+        hemoglobin: { min: 11.0, max: 19.0, unit: "g/dL", refText: "11 - 19" },
+        hct: { min: 32.0, max: 53.0, unit: "%", refText: "32 - 53" },
+        mcv: { min: 37.0, max: 59.0, unit: "fL", refText: "37 - 59" },
+        mch: { min: 12.3, max: 19.7, unit: "pg", refText: "12.3 - 19.7" },
+        mchc: { min: 31.0, max: 38.6, unit: "g/dL", refText: "31 - 38.6" },
+        platelets: { min: 1.0, max: 3.5, unit: "×10⁵/µL", refText: "1 - 3.5" },
+        wbc: { min: 5.4, max: 14.3, unit: "×10³/µL", refText: "5.4 - 14.3" },
+        neutrophils: { min: 35, max: 75, unit: "%", refText: "35 - 75" },
+        lymphocytes: { min: 20, max: 70, unit: "%", refText: "20 - 70" },
+        monocytes: { min: 1, max: 8, unit: "%", refText: "1 - 8" },
+        eosinophils: { min: 1, max: 10, unit: "%", refText: "1 - 10" },
+        basophils: { min: 0, max: 3, unit: "%", refText: "0 - 3" }
+      }
+    };
+    // Also alias uppercase keys for compatibility
+    speciesReferenceRanges.CANINE = speciesReferenceRanges.Canine;
+    speciesReferenceRanges.FELINE = speciesReferenceRanges.Feline;
+    speciesReferenceRanges.BOVINE = speciesReferenceRanges.Bovine;
+    speciesReferenceRanges.OVINE = speciesReferenceRanges.Ovine;
+    speciesReferenceRanges.CAPRINE = speciesReferenceRanges.Caprine;
+    speciesReferenceRanges.EQUINE = speciesReferenceRanges.Equine;
+
+    function applySpeciesReferenceRanges(species) {
+      const ranges = speciesReferenceRanges[species];
+      if (!ranges) return;
+
+      Object.keys(ranges).forEach((key) => {
+        const item = ranges[key];
+        const input = document.querySelector(`.table-val-input[data-key="${key}"]`);
+        if (input) {
+          input.dataset.min = item.min;
+          input.dataset.max = item.max;
+          updateFlag(input);
+        }
+        const refCell = document.getElementById(`ref-${key}`);
+        if (refCell) {
+          refCell.textContent = item.refText;
+        }
+        const unitCell = document.getElementById(`unit-${key}`);
+        if (unitCell && item.unit) {
+          unitCell.textContent = item.unit;
+        }
+      });
+
+      const toast = document.getElementById("statusToast");
+      if (toast) {
+        toast.textContent = `Applied ${species} reference ranges to biological parameters.`;
+      }
+    }
+
+    function renderLogo() {
       const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Lab logo">
           <defs>
@@ -294,251 +1137,253 @@
           <circle cx="60" cy="60" r="30" fill="rgba(255,255,255,0.15)" />
           <path d="M48 34h24v10H48zM52 44h16v34H52z" fill="#fff" opacity="0.95" />
           <path d="M47 56h26v8H47z" fill="#fff" opacity="0.95" />
-          <path d="M58 36h4v34h-4z" fill="#2f7ad8" opacity="0.9" />
         </svg>`;
-      return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
-    })();
-
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
+      const logoEl = document.getElementById("logoContainer");
+      if (logoEl) {
+        logoEl.innerHTML = `<img class="logo" alt="Logo" src="data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}" style="width:48px;height:48px;object-fit:contain;">`;
+      }
     }
 
-    function getValue(id) {
-      return elements[id].value.trim();
+    function evaluateValue(valStr, min, max) {
+      if (valStr === undefined || valStr === null || String(valStr).trim() === "") {
+        return "none";
+      }
+      const num = parseFloat(valStr);
+      if (isNaN(num)) return "normal";
+      if (min !== undefined && num < min) return "low";
+      if (max !== undefined && num > max) return "high";
+      return "normal";
     }
 
-    function getReportData() {
-      return {
-        patientName: getValue("patientName"),
-        patientId: getValue("patientId"),
-        age: getValue("age"),
-        sex: getValue("sex"),
-        sampleType: getValue("sampleType"),
-        testName: getValue("testName"),
-        result: getValue("result"),
-        unit: getValue("unit"),
-        referenceRange: getValue("referenceRange"),
-        doctorName: getValue("doctorName"),
-        department: getValue("department"),
-        collectionDate: getValue("collectionDate"),
-        reportDate: getValue("reportDate"),
-        notes: getValue("notes") || "No additional notes provided.",
-      };
+    function updateFlag(inputEl) {
+      const key = inputEl.dataset.key;
+      const min = parseFloat(inputEl.dataset.min);
+      const max = parseFloat(inputEl.dataset.max);
+      const val = inputEl.value;
+      const flagEl = document.getElementById(`flag-${key}`);
+
+      inputEl.classList.remove("is-high", "is-low");
+
+      const status = evaluateValue(val, min, max);
+
+      if (status === "high") {
+        inputEl.classList.add("is-high");
+        if (flagEl) {
+          flagEl.className = "badge-high";
+          flagEl.textContent = "HIGH ▲";
+        }
+      } else if (status === "low") {
+        inputEl.classList.add("is-low");
+        if (flagEl) {
+          flagEl.className = "badge-low";
+          flagEl.textContent = "LOW ▼";
+        }
+      } else {
+        if (flagEl) {
+          flagEl.className = "badge-normal";
+          flagEl.textContent = "NORMAL";
+        }
+      }
     }
 
-    function getLogoMarkup() {
-      return `<img class="logo" src="${logoDataUri}" alt="Logo">`;
+    function updateFilenameHint() {
+      const name = document.getElementById("ownerName").value.trim() || "lab_report";
+      const safe = name.replace(/[^a-z0-9-_]+/gi, "_") || "lab_report";
+      document.getElementById("pdfFilenameHint").textContent = `${safe}.pdf`;
     }
 
-    function buildHtmlReport(data) {
-      return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Laboratory Report</title>
-  <style>
-    body {
-      margin: 0;
-      background: #eef4fb;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #1f2937;
-    }
-    .page {
-      width: 794px;
-      margin: 24px auto;
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-      padding: 24px;
-    }
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    .logo {
-      width: 52px;
-      height: 52px;
-      object-fit: contain;
-    }
-    .title-wrap h1 {
-      margin: 0;
-      font-size: 24px;
-      color: #1f3b63;
-    }
-    .title-wrap p {
-      margin: 3px 0 0 0;
-      color: #4b5563;
-      font-size: 12px;
-    }
-    .section-title {
-      margin: 18px 0 10px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #dbeafe;
-      color: #1f3b63;
-      font-size: 14px;
-      font-weight: bold;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    td {
-      border: 1px solid #cbd5e1;
-      padding: 9px 10px;
-      vertical-align: top;
-      font-size: 12px;
-    }
-    .label {
-      width: 34%;
-      background: #eff6ff;
-      font-weight: bold;
-      color: #1f3b63;
-    }
-    .notes-box {
-      border: 1px solid #cbd5e1;
-      background: #f8fafc;
-      padding: 12px;
-      min-height: 70px;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-    .footer {
-      margin-top: 18px;
-      color: #4b5563;
-      font-size: 11px;
-    }
-    .meta {
-      margin-top: 8px;
-      color: #6b7280;
-      font-size: 10px;
-    }
-  </style>
-</head>
-<body>
-  <div class="page">
-    <div class="header">
-      ${getLogoMarkup()}
-      <div class="title-wrap">
-        <h1>Laboratory Report</h1>
-        <p>Clinical Diagnostic Summary</p>
-      </div>
-    </div>
-
-    <div class="section-title">Patient Information</div>
-    <table>
-      <tr><td class="label">Patient Name</td><td>${escapeHtml(data.patientName)}</td></tr>
-      <tr><td class="label">Patient ID</td><td>${escapeHtml(data.patientId)}</td></tr>
-      <tr><td class="label">Age</td><td>${escapeHtml(data.age)}</td></tr>
-      <tr><td class="label">Sex</td><td>${escapeHtml(data.sex)}</td></tr>
-      <tr><td class="label">Sample Type</td><td>${escapeHtml(data.sampleType)}</td></tr>
-      <tr><td class="label">Collection Date</td><td>${escapeHtml(data.collectionDate)}</td></tr>
-      <tr><td class="label">Report Date</td><td>${escapeHtml(data.reportDate)}</td></tr>
-    </table>
-
-    <div class="section-title">Test Details</div>
-    <table>
-      <tr><td class="label">Test Name</td><td>${escapeHtml(data.testName)}</td></tr>
-      <tr><td class="label">Result</td><td>${escapeHtml(data.result)}</td></tr>
-      <tr><td class="label">Unit</td><td>${escapeHtml(data.unit)}</td></tr>
-      <tr><td class="label">Reference Range</td><td>${escapeHtml(data.referenceRange)}</td></tr>
-    </table>
-
-    <div class="section-title">Clinical Notes</div>
-    <div class="notes-box">${escapeHtml(data.notes)}</div>
-
-    <div class="footer">
-      <div><b>Prepared by:</b> ${escapeHtml(data.doctorName)}</div>
-      <div><b>Department:</b> ${escapeHtml(data.department)}</div>
-      <div class="meta">Generated on ${new Date().toLocaleString()}</div>
-    </div>
-  </div>
-</body>
-</html>`;
+    function syncDoctorName() {
+      const docName = document.getElementById("doctorName").value.trim() || "Dr. Pathologist";
+      document.getElementById("doctorSignName").textContent = docName;
     }
 
-    function renderPreview() {
-      const data = getReportData();
-      const html = buildHtmlReport(data);
-      previewFrame.srcdoc = html;
-      fileNameHint.textContent = `${(data.patientName || "lab_report").replace(/[^a-z0-9-_]+/gi, "_") || "lab_report"}.pdf`;
-      statusBox.textContent = "Preview updated. You can now download the PDF report.";
-      return html;
+    function setupEventListeners() {
+      document.querySelectorAll(".table-val-input").forEach((input) => {
+        input.addEventListener("input", () => {
+          updateFlag(input);
+        });
+        // Initial flag evaluation
+        updateFlag(input);
+      });
+
+      const ownerNameInput = document.getElementById("ownerName");
+      if (ownerNameInput) {
+        ownerNameInput.addEventListener("input", updateFilenameHint);
+      }
+
+      const docNameInput = document.getElementById("doctorName");
+      if (docNameInput) {
+        docNameInput.addEventListener("input", syncDoctorName);
+      }
+
+      const speciesSelect = document.getElementById("speciesBreed");
+      if (speciesSelect) {
+        speciesSelect.addEventListener("change", (e) => {
+          applySpeciesReferenceRanges(e.target.value);
+        });
+      }
+
+      // Default date
+      const today = new Date().toISOString().slice(0, 10);
+      const repDate = document.getElementById("reportDate");
+      if (repDate && !repDate.value) repDate.value = today;
+
+      const timeEl = document.getElementById("reportGeneratedTime");
+      if (timeEl) {
+        timeEl.textContent = `Report Generated: ${new Date().toLocaleString()}`;
+      }
+    }
+
+    function resetHaemogramDefaults() {
+      Object.keys(defaultHaemogramData).forEach((key) => {
+        const input = document.querySelector(`[data-key="${key}"]`) || document.getElementById(key);
+        if (input) {
+          input.value = defaultHaemogramData[key];
+        }
+      });
+      document.querySelectorAll(".table-val-input").forEach((input) => {
+        updateFlag(input);
+      });
+      syncDoctorName();
+      updateFilenameHint();
+      document.getElementById("statusToast").textContent = "Reset report inputs to default values.";
     }
 
     async function downloadPdf() {
-      const html = renderPreview();
-      const tempFrame = document.createElement("iframe");
-      tempFrame.style.position = "fixed";
-      tempFrame.style.left = "-10000px";
-      tempFrame.style.top = "0";
-      tempFrame.style.width = "794px";
-      tempFrame.style.height = "1200px";
-      tempFrame.style.border = "0";
-      document.body.appendChild(tempFrame);
+      const toast = document.getElementById("statusToast");
+      toast.textContent = "Generating PDF from live report...";
 
-      const tempDoc = tempFrame.contentDocument || tempFrame.contentWindow.document;
-      tempDoc.open();
-      tempDoc.write(html);
-      tempDoc.close();
+      const reportSheet = document.getElementById("haemogramReportSheet");
 
-      await new Promise((resolve) => {
-        tempFrame.onload = resolve;
-        setTimeout(resolve, 200);
-      });
-
-      const report = tempDoc.querySelector(".page");
-      const canvas = await html2canvas(report, { scale: 2, backgroundColor: "#ffffff" });
-      const imageData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const imgProps = pdf.getImageProperties(imageData);
-      const imgWidth = pageWidth - 16;
-      const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-
-      pdf.addImage(imageData, "PNG", 8, 8, imgWidth, Math.min(imgHeight, pageHeight - 16));
-      const pdfName = `${(getValue("patientName") || "lab_report").replace(/[^a-z0-9-_]+/gi, "_") || "lab_report"}.pdf`;
-      pdf.save(pdfName);
-
-      tempFrame.remove();
-      statusBox.textContent = `PDF report downloaded as ${pdfName}.`;
-    }
-
-    function resetForm() {
-      fieldIds.forEach((id) => {
-        if (id === "collectionDate" || id === "reportDate") {
-          elements[id].value = new Date().toISOString().slice(0, 10);
-        } else if (id === "notes") {
-          elements[id].value = "";
+      // --- Swap all inputs/selects/textareas for plain text spans ---
+      const swaps = [];
+      reportSheet.querySelectorAll("input, select, textarea").forEach((el) => {
+        let displayValue = "";
+        if (el.tagName === "SELECT") {
+          displayValue = el.options[el.selectedIndex] ? el.options[el.selectedIndex].text : "";
+        } else if (el.tagName === "TEXTAREA") {
+          displayValue = el.value;
+        } else if (el.type === "date" && el.value) {
+          // Format date nicely
+          const d = new Date(el.value + "T00:00:00");
+          displayValue = d.toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" });
         } else {
-          elements[id].value = "";
+          displayValue = el.value;
         }
+
+        const span = document.createElement("span");
+        span.textContent = displayValue || "-";
+
+        // Copy relevant styles from the input
+        const styles = window.getComputedStyle(el);
+        span.style.fontFamily = styles.fontFamily;
+        span.style.fontSize = styles.fontSize;
+        span.style.fontWeight = styles.fontWeight;
+        span.style.color = styles.color;
+        span.style.textAlign = styles.textAlign;
+        span.style.display = el.tagName === "TEXTAREA" ? "block" : "inline-block";
+        span.style.width = el.tagName === "TEXTAREA" ? "100%" : "auto";
+        span.style.whiteSpace = el.tagName === "TEXTAREA" ? "pre-wrap" : "nowrap";
+        span.style.lineHeight = styles.lineHeight;
+        span.style.minWidth = el.classList.contains("table-val-input") ? "90px" : "auto";
+        if (el.classList.contains("table-val-input")) {
+          span.style.textAlign = "center";
+          span.style.display = "block";
+        }
+
+        el.parentNode.insertBefore(span, el);
+        el.style.display = "none";
+
+        swaps.push({ original: el, placeholder: span });
       });
-      renderPreview();
-      statusBox.textContent = "Form reset. Ready for new input.";
+
+      try {
+        const canvas = await html2canvas(reportSheet, {
+          scale: 2,
+          backgroundColor: "#ffffff",
+          useCORS: true
+        });
+
+        const pdf = new jsPDF("p", "mm", "a4");
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        const margin = 7;
+        const usableWidth = pageWidth - margin * 2;
+        const usableHeight = pageHeight - margin * 2;
+
+        // Calculate how the full image maps to page width
+        const imgScaledHeight = (canvas.height * usableWidth) / canvas.width;
+
+        if (imgScaledHeight <= usableHeight) {
+          // Fits on one page
+          const imageData = canvas.toDataURL("image/png");
+          pdf.addImage(imageData, "PNG", margin, margin, usableWidth, imgScaledHeight);
+        } else {
+          // Multi-page: slice the canvas into page-sized vertical chunks
+          const totalPages = Math.ceil(imgScaledHeight / usableHeight);
+          const sliceHeight = Math.floor(canvas.height / totalPages);
+
+          for (let page = 0; page < totalPages; page++) {
+            if (page > 0) pdf.addPage();
+
+            const srcY = page * sliceHeight;
+            const srcH = Math.min(sliceHeight, canvas.height - srcY);
+
+            const pageCanvas = document.createElement("canvas");
+            pageCanvas.width = canvas.width;
+            pageCanvas.height = srcH;
+            const ctx = pageCanvas.getContext("2d");
+            ctx.drawImage(canvas, 0, srcY, canvas.width, srcH, 0, 0, canvas.width, srcH);
+
+            const pageImageData = pageCanvas.toDataURL("image/png");
+            const sliceScaledHeight = (srcH * usableWidth) / canvas.width;
+            pdf.addImage(pageImageData, "PNG", margin, margin, usableWidth, sliceScaledHeight);
+          }
+        }
+
+        const pName = document.getElementById("ownerName").value.trim() || "lab_report";
+        const pdfName = `${pName.replace(/[^a-z0-9-_]+/gi, "_") || "lab_report"}.pdf`;
+        const pageCount = Math.ceil(imgScaledHeight / usableHeight);
+
+        pdf.save(pdfName);
+        toast.textContent = `PDF downloaded as ${pdfName} (${pageCount} page${pageCount > 1 ? 's' : ''})`;
+      } catch (err) {
+        console.error(err);
+        toast.textContent = "Error generating PDF. Please try again.";
+      } finally {
+        // --- Restore all original inputs ---
+        swaps.forEach(({ original, placeholder }) => {
+          original.style.display = "";
+          placeholder.remove();
+        });
+      }
     }
 
-    document.getElementById("previewBtn").addEventListener("click", renderPreview);
-    document.getElementById("downloadBtn").addEventListener("click", downloadPdf);
-    document.getElementById("resetBtn").addEventListener("click", resetForm);
+    function openReport(type) {
+      document.getElementById("landing").classList.add("hidden");
+      document.getElementById("workspace").classList.remove("hidden");
+      renderLogo();
+      setupEventListeners();
+      updateFilenameHint();
+      syncDoctorName();
+    }
 
-    fieldIds.forEach((id) => {
-      elements[id].addEventListener("input", () => {
-        renderPreview();
-      });
+    function backToLanding() {
+      document.getElementById("workspace").classList.add("hidden");
+      document.getElementById("landing").classList.remove("hidden");
+    }
+
+    document.querySelectorAll("[data-open-report]").forEach((btn) => {
+      btn.addEventListener("click", () => openReport(btn.dataset.openReport));
     });
 
-    document.getElementById("collectionDate").value = new Date().toISOString().slice(0, 10);
-    document.getElementById("reportDate").value = new Date().toISOString().slice(0, 10);
-    renderPreview();
+    document.getElementById("downloadBtn").addEventListener("click", downloadPdf);
+    document.getElementById("resetBtn").addEventListener("click", resetHaemogramDefaults);
+    document.getElementById("backBtn").addEventListener("click", backToLanding);
+
+    renderLogo();
   </script>
 </body>
+
 </html>
