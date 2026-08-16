@@ -1,33 +1,21 @@
-const fs = require("fs");
+const fs = require('fs');
 const path = "c:/Users/Siddhi/Desktop/LAB_REPORTS/PawarLabs/index.html";
 let html = fs.readFileSync(path, "utf8");
+
+const headerJpgPath = 'c:/Users/Siddhi/Desktop/LAB_REPORTS/PawarLabs/header.jpg';
+const headerBuf = fs.readFileSync(headerJpgPath);
+const headerB64 = headerBuf.toString('base64');
+const headerDataUrl = `data:image/jpeg;base64,${headerB64}`;
 
 const biochemistryBlock = `
             <div class="report-paper hidden" id="biochemistryReportSheet">
               <div class="paper-header"
-                style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; margin-bottom:12px; border-radius:12px; background:linear-gradient(120deg, #082f70 0%, #1254a2 47%, #2782db 100%); color:#fff; box-shadow:0 7px 18px rgba(8, 47, 112, 0.27);">
-                <div
-                  style="flex: 0 0 auto; display: flex; align-items: center; background: #fff; border-radius: 10px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-                  <img id="bioLabLogo" src="logo%20.jpeg" alt="Logo"
-                    style="width: 100px; height: 100px; object-fit: contain; display: block;">
-                </div>
-                <div style="flex: 1 1 auto; text-align: center; padding: 0 12px;">
-                  <h1
-                    style="margin:0; font-family:Georgia, 'Times New Roman', serif; font-size:20px; color:#fff; font-weight:700; line-height:1.18; letter-spacing:0.01em; text-shadow:0 1px 3px rgba(0,0,0,0.2);">
-                    Dr Pawar's Pet and Live Stock<br>Disease Diagnostic Lab</h1>
-                  <p
-                    style="margin: 4px 0 0 0; color: rgba(255,255,255,0.85); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">
-                    BIOCHEMISTRY PANEL REPORT</p>
-                </div>
-                <div
-                  style="flex: 0 0 auto; text-align: right; font-size: 11px; color: rgba(255,255,255,0.9); line-height: 1.4; min-width: 140px;">
-                  <strong style="color: #fff; font-size: 13px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">Dr.V.T.Pawar</strong><br>
-                  <span style="font-size:10px; color:rgba(255,255,255,0.9);">Reg.No : MSVC,3875</span><br>
-                  <span style="font-weight: 600;">M.V.Sc (Pathology)</span><br>
-                  <span style="font-weight: 600; color: rgba(255,255,255,0.95);">📞 +91 9850509600</span>
-                </div>
+                style="margin-bottom:12px; border-radius:10px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,0.12);">
+                <img id="bioLabLogo" src="${headerDataUrl}" alt="Lab Header"
+                  style="width: 100%; height: auto; display: block; border-radius: 10px;">
               </div>
 
+              <h2 style="text-align:center; color:#0d5db8; font-size:18px; font-weight:800; text-transform:uppercase; margin:8px 0 12px 0; letter-spacing:0.05em; border-bottom:2px solid #bfdbfe; padding-bottom:6px;">Biochemistry Report</h2>
               <div class="section-banner">Patient Details</div>
               <div class="demographics-grid">
                 <div class="demo-item">
@@ -43,7 +31,7 @@ const biochemistryBlock = `
                   <input type="text" class="live-edit" id="bioMobileNo" value="" placeholder="Enter mobile number">
                 </div>
                 <div class="demo-item">
-                  <label for="bioSpeciesBreed">Species / Breed:</label>
+                  <label for="bioSpeciesBreed">Species:</label>
                   <select class="live-edit" id="bioSpeciesBreed">
                     <option value="" disabled selected>Select species</option>
                     <option value="BOVINE">BOVINE</option>
@@ -53,6 +41,10 @@ const biochemistryBlock = `
                     <option value="CAPRINE">CAPRINE</option>
                     <option value="EQUINE">EQUINE</option>
                   </select>
+                </div>
+                <div class="demo-item">
+                  <label for="bioBreedInput">Breed:</label>
+                  <input type="text" class="live-edit" id="bioBreedInput" value="" placeholder="Enter breed">
                 </div>
                 <div class="demo-item">
                   <label for="bioDoctorName">Ref by DR:</label>
@@ -126,6 +118,8 @@ const biochemistryBlock = `
 if (html.includes('id="biochemistryReportSheet"')) {
   console.log("Biochemistry sheet already exists");
 } else {
+  // Normalize CRLF to LF for matching
+  const normalizedHtml = html.replace(/\r\n/g, "\n");
   const marker = `            </div>
           </div>
         </div>
@@ -133,11 +127,12 @@ if (html.includes('id="biochemistryReportSheet"')) {
   </div>
 
   <div class="status-toast" id="statusToast">`;
-  if (!html.includes(marker)) {
-    console.error("Marker not found");
+
+  if (!normalizedHtml.includes(marker)) {
+    console.error("Marker not found in normalized html");
     process.exit(1);
   }
-  html = html.replace(
+  const updatedNormalized = normalizedHtml.replace(
     marker,
     `            </div>${biochemistryBlock}
           </div>
@@ -147,6 +142,6 @@ if (html.includes('id="biochemistryReportSheet"')) {
 
   <div class="status-toast" id="statusToast">`
   );
-  fs.writeFileSync(path, html, "utf8");
-  console.log("Inserted biochemistry HTML");
+  fs.writeFileSync(path, updatedNormalized, "utf8");
+  console.log("Inserted biochemistry HTML successfully");
 }
