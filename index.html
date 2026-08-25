@@ -826,6 +826,14 @@
         <p>Culture and sensitivity report with organism details and antibiotic response.</p>
         <button class="btn primary" data-open-report="sensitivity">Open Sensitivity</button>
       </article>
+
+      <article class="report-card">
+        <span class="card-tag">Faecal Examination Report</span>
+        <h2>Faecal Examination Report</h2>
+        <p>Comprehensive faecal examination report with microscopic and biochemical findings.</p>
+        <button class="btn primary" data-open-report="faecal">Open Faecal Examination</button>
+      </article>
+
     </section>
 
     <!-- LIVE REPORT WORKSPACE (SINGLE PANEL, DIRECT INLINE EDITING) -->
@@ -1412,6 +1420,109 @@
                 </div>
               </div>
 
+              <div id="faecalContent" class="report-section hidden">
+                <h2
+                  style="text-align:center; color:#0d5db8; font-size:18px; font-weight:800; text-transform:uppercase; margin:8px 0 12px 0; letter-spacing:0.05em; border-bottom:2px solid #bfdbfe; padding-bottom:6px;">
+                  Faecal Stool Examination Report</h2>
+
+                <div class="section-banner">Patient Demographics</div>
+                <div class="demographics-grid">
+                  <div class="demo-item">
+                    <label for="faecalOwnerName">Name of Owner:</label>
+                    <input type="text" class="live-edit" id="faecalOwnerName" placeholder="Enter owner name">
+                  </div>
+                  <div class="demo-item">
+                    <label for="faecalAddress">Address:</label>
+                    <input type="text" class="live-edit" id="faecalAddress" placeholder="Enter address">
+                  </div>
+                  <div class="demo-item">
+                    <label for="faecalMobileNo">Mobile No:</label>
+                    <input type="text" class="live-edit" id="faecalMobileNo" placeholder="Enter mobile number">
+                  </div>
+                  <div class="demo-item">
+                    <label for="faecalSpecies">Species:</label>
+                    <select class="live-edit" id="faecalSpecies">
+                      <option value="" disabled selected>Select species</option>
+                      <option value="BOVINE">BOVINE</option>
+                      <option value="CANINE">CANINE</option>
+                      <option value="FELINE">FELINE</option>
+                      <option value="OVINE">OVINE</option>
+                      <option value="CAPRINE">CAPRINE</option>
+                      <option value="EQUINE">EQUINE</option>
+                    </select>
+                  </div>
+                  <div class="demo-item">
+                    <label for="faecalBreed">Breed:</label>
+                    <input type="text" class="live-edit" id="faecalBreed" placeholder="Enter breed">
+                  </div>
+                  <div class="demo-item">
+                    <label for="faecalDoctor">Ref by DR:</label>
+                    <input type="text" class="live-edit" id="faecalDoctor" placeholder="Enter doctor name">
+                  </div>
+                  <div class="demo-item">
+                    <label for="faecalAge">Age / Sex:</label>
+                    <div style="display:flex; gap:6px; align-items:center; width:100%;">
+                      <input type="text" class="live-edit" id="faecalAge" style="width:60%;" placeholder="Age">
+                      <select class="live-edit" id="faecalSex" style="width:40%;">
+                        <option value="" disabled selected>Sex</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="demo-item">
+                    <label for="faecalReportDate">Date:</label>
+                    <input type="date" class="live-edit" id="faecalReportDate">
+                  </div>
+                  <div class="demo-item" style="grid-column: 1 / -1;">
+                    <label for="faecalHistory">History:</label>
+                    <input type="text" class="live-edit" id="faecalHistory" placeholder="Enter clinical history"
+                      style="flex:1;">
+                  </div>
+                </div>
+
+                <div class="section-banner">Physical Examination</div>
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th style="width:12%;">SR. NO.</th>
+                      <th style="width:48%;">PARAMETER</th>
+                      <th style="width:40%;">RESULT</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>1</td><td>Colour</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>2</td><td>Consistency</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>3</td><td>Mucus</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>4</td><td>Blood</td><td><input type="text" class="live-edit"></td></tr>
+                  </tbody>
+                </table>
+
+                <div class="section-banner">Microscopic Examination</div>
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th style="width:12%;">SR. NO.</th>
+                      <th style="width:48%;">PARAMETER</th>
+                      <th style="width:40%;">RESULT</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>1</td><td>Pus Cells</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>2</td><td>Epithelial Cells</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>3</td><td>RBC</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>4</td><td>Cysts</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>5</td><td>Vegetable Cells / Fibres</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>6</td><td>Fat Globules</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>7</td><td>Starch</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>8</td><td>Yeast Cells</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>9</td><td>Muscle Fibres</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>10</td><td>Bacteria</td><td><input type="text" class="live-edit"></td></tr>
+                    <tr><td>11</td><td>Ova / Eggs of Parasites</td><td><input type="text" class="live-edit"></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
               <!-- FOOTER -->
               <div class="paper-footer-section" id="paperFooterSection" style="margin-top:10px;">
                 <!-- DOCTOR SIGNATURE BLOCK (RIGHT ALIGNED ABOVE DIVIDER) -->
@@ -1834,10 +1945,13 @@
     function getOwnerNameValue() {
       const biochemicalContent = document.getElementById("biochemicalContent");
       const sensitivityContent = document.getElementById("sensitivityContent");
+      const faecalContent = document.getElementById("faecalContent");
       const isBiochemicalView = biochemicalContent && !biochemicalContent.classList.contains("hidden");
       const isSensitivityView = sensitivityContent && !sensitivityContent.classList.contains("hidden");
+      const isFaecalView = faecalContent && !faecalContent.classList.contains("hidden");
       const biochemOwnerInput = document.getElementById("biochemOwnerName");
       const sensitivityOwnerInput = document.getElementById("sensitivityOwnerName");
+      const faecalOwnerInput = document.getElementById("faecalOwnerName");
       const haemogramOwnerInput = document.getElementById("ownerName");
 
       if (isBiochemicalView && biochemOwnerInput) {
@@ -1846,6 +1960,10 @@
 
       if (isSensitivityView && sensitivityOwnerInput) {
         return sensitivityOwnerInput.value.trim() || "lab_report";
+      }
+
+      if (isFaecalView && faecalOwnerInput) {
+        return faecalOwnerInput.value.trim() || "lab_report";
       }
 
       if (haemogramOwnerInput) {
@@ -2103,16 +2221,18 @@
     }
 
     function resetHaemogramDefaults() {
-      document.querySelectorAll("#haemogramReportSheet input, #haemogramReportSheet select, #haemogramReportSheet textarea").forEach((input) => {
+      const activeContent = document.querySelector("#haemogramContent:not(.hidden), #biochemicalContent:not(.hidden), #sensitivityContent:not(.hidden), #faecalContent:not(.hidden)");
+      const resetTarget = activeContent || document.getElementById("haemogramReportSheet");
+      resetTarget.querySelectorAll("input, select, textarea").forEach((input) => {
         if (input.tagName === "SELECT") {
           input.value = "";
         } else {
-          input.value = "";
+          input.value = input.dataset.defaultValue || "";
         }
       });
 
       const today = new Date().toISOString().slice(0, 10);
-      const repDate = document.getElementById("reportDate");
+      const repDate = resetTarget.querySelector('input[type="date"]');
       if (repDate) repDate.value = today;
 
       document.querySelectorAll(".table-val-input").forEach((input) => {
@@ -2240,15 +2360,18 @@
       const isHaemogram = type === "haemogram";
       const isBiochemical = type === "biochemical";
       const isSensitivity = type === "sensitivity";
+      const isFaecal = type === "faecal";
       const haemogramContent = document.getElementById("haemogramContent");
       const biochemicalContent = document.getElementById("biochemicalContent");
       const sensitivityContent = document.getElementById("sensitivityContent");
+      const faecalContent = document.getElementById("faecalContent");
       const title = document.getElementById("reportTitleHeader");
       const subtitle = document.getElementById("reportSubHeaderTitle");
 
       if (haemogramContent) haemogramContent.classList.toggle("hidden", !isHaemogram);
       if (biochemicalContent) biochemicalContent.classList.toggle("hidden", !isBiochemical);
       if (sensitivityContent) sensitivityContent.classList.toggle("hidden", !isSensitivity);
+      if (faecalContent) faecalContent.classList.toggle("hidden", !isFaecal);
       const haemoNotes = document.getElementById("haemogramFooterNotes");
       if (haemoNotes) haemoNotes.classList.toggle("hidden", !isHaemogram);
       if (title) {
@@ -2256,14 +2379,18 @@
           ? "Biochemistry Report Live Editor"
           : isSensitivity
             ? "Antibiotic Sensitivity Report Live Editor"
-            : "Haemogram (CBC) Live Editor";
+            : isFaecal
+              ? "Faecal Examination Report Live Editor"
+              : "Haemogram (CBC) Live Editor";
       }
       if (subtitle) {
         subtitle.textContent = isBiochemical
           ? "BIOCHEMISTRY - KIT 1 & KIT 2"
           : isSensitivity
             ? "ANTIBIOTICS SENSITIVITY REPORT"
-            : "HAEMOGRAM - COMPLETE BLOOD COUNT (CBC)";
+            : isFaecal
+              ? "FAECAL STOOL EXAMINATION REPORT"
+              : "HAEMOGRAM - COMPLETE BLOOD COUNT (CBC)";
       }
 
       setupEventListeners();
