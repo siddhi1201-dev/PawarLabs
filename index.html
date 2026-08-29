@@ -834,6 +834,13 @@
         <button class="btn primary" data-open-report="faecal">Open Faecal Examination</button>
       </article>
 
+      <article class="report-card">
+        <span class="card-tag">SEROLOGY</span>
+        <h2>Pregnancy Test Report</h2>
+        <p>Rapid immunochromatographic pregnancy test report with patient demographics, animal ID, sample type and result.</p>
+        <button class="btn primary" data-open-report="pregnancy">Open Pregnancy Test</button>
+      </article>
+
     </section>
 
     <!-- LIVE REPORT WORKSPACE (SINGLE PANEL, DIRECT INLINE EDITING) -->
@@ -1664,6 +1671,114 @@
               </div>
             </div>
           </div>
+
+            <!-- =========================================================
+                 PREGNANCY TEST REPORT
+            ========================================================== -->
+            <div id="pregnancyContent" class="hidden">
+              <div class="report-paper" id="pregnancyReportSheet" style="font-family: Aptos, Calibri, Arial, sans-serif; color:#1f2937;">
+
+                <!-- Paper Header (shared logo) -->
+                <div class="paper-header" style="margin-bottom:12px; border-radius:10px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,0.12);">
+                  <img id="labLogoPregnancy" src="header.jpg" alt="Lab Header" style="width:100%; display:block; object-fit:cover;">
+                </div>
+
+                <!-- Report Sub-header -->
+                <div style="background:linear-gradient(90deg,#0d5db8,#1d7be0); color:#fff; border-radius:8px; padding:7px 14px; font-size:13px; font-weight:700; letter-spacing:0.08em; margin-bottom:10px; text-align:center;">
+                  PREGNANCY TEST REPORT
+                </div>
+
+                <!-- Patient Demographics -->
+                <div style="border:1px solid #d1d5db; border-radius:8px; padding:10px 14px; margin-bottom:12px;">
+                  <div style="font-size:11px; font-weight:700; color:#0d5db8; letter-spacing:0.08em; margin-bottom:8px; border-bottom:1px solid #e5e7eb; padding-bottom:4px;">PATIENT DEMOGRAPHICS</div>
+                  <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                    <tr>
+                      <td style="padding:3px 6px; width:22%; color:#475569; font-weight:600;">Owner Name</td>
+                      <td style="padding:3px 6px; width:28%;">
+                        <input id="pregOwnerName" type="text" class="live-edit" placeholder="Enter owner name" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+                      </td>
+                      <td style="padding:3px 6px; width:22%; color:#475569; font-weight:600;">Date</td>
+                      <td style="padding:3px 6px; width:28%;">
+                        <input id="pregDate" type="date" class="live-edit" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:3px 6px; color:#475569; font-weight:600;">Address</td>
+                      <td style="padding:3px 6px;">
+                        <input id="pregAddress" type="text" class="live-edit" placeholder="Enter address" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+                      </td>
+                      <td style="padding:3px 6px; color:#475569; font-weight:600;">Mobile No.</td>
+                      <td style="padding:3px 6px;">
+                        <input id="pregMobile" type="text" class="live-edit" placeholder="Enter mobile" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:3px 6px; color:#475569; font-weight:600;">Species / Breed</td>
+                      <td style="padding:3px 6px;">
+                        <input id="pregSpecies" type="text" class="live-edit" placeholder="e.g. Canine / Labrador" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+                      </td>
+                      <td style="padding:3px 6px; color:#475569; font-weight:600;">Referred By</td>
+                      <td style="padding:3px 6px;">
+                        <input id="pregRefBy" type="text" class="live-edit" placeholder="Doctor / clinic name" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+                <!-- Results Table -->
+                <div style="border:1px solid #d1d5db; border-radius:8px; overflow:hidden; margin-bottom:12px;">
+                  <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                    <thead>
+                      <tr style="background:linear-gradient(90deg,#0d5db8,#1d7be0); color:#fff;">
+                        <th style="padding:7px 10px; width:8%; text-align:center;">Sr. No.</th>
+                        <th style="padding:7px 10px; width:30%; text-align:left;">Animal ID</th>
+                        <th style="padding:7px 10px; width:30%; text-align:left;">Sample</th>
+                        <th style="padding:7px 10px; width:32%; text-align:left;">Result</th>
+                      </tr>
+                    </thead>
+                    <tbody id="pregTestRows">
+                      <tr class="preg-row">
+                        <td style="padding:5px 10px; text-align:center; color:#475569; font-weight:600; border-bottom:1px solid #f1f5f9;">1</td>
+                        <td style="padding:5px 10px; border-bottom:1px solid #f1f5f9;">
+                          <input type="text" class="live-edit preg-input" placeholder="Animal ID" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+                        </td>
+                        <td style="padding:5px 10px; border-bottom:1px solid #f1f5f9;">
+                          <input type="text" class="live-edit preg-input" placeholder="Sample type" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+                        </td>
+                        <td style="padding:5px 10px; border-bottom:1px solid #f1f5f9;">
+                          <input type="text" class="live-edit preg-input" placeholder="Positive / Negative" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Add Row Button (hidden during PDF export via print style) -->
+                <div class="preg-add-row-wrapper" style="margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                  <button id="pregAddRowBtn" type="button" onclick="addPregRow()" style="background:linear-gradient(135deg,#0d5db8,#1d7be0); color:#fff; border:none; border-radius:8px; padding:6px 14px; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;">&#43; Add Row</button>
+                  <span style="font-size:11px; color:#64748b;">Click to add more animals</span>
+                </div>
+
+                <!-- Note -->
+                <div style="background:#f0f6ff; border:1px solid #bfdbfe; border-radius:8px; padding:7px 14px; font-size:11px; color:#1e40af; margin-bottom:10px;">
+                  <strong>Note:</strong> Method &mdash; Rapid Immunochromatographic Assay
+                </div>
+
+                <!-- Footer -->
+                <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:8px;">
+                  <div style="font-size:10px; color:#64748b;" id="pregReportGeneratedTime">Report Generated: Live Preview</div>
+                  <div style="text-align:right; font-size:11px; color:#1e293b;">
+                    <img src="pawarsign.png" alt="Signature" style="height:48px; width:auto; object-fit:contain; display:block; margin-left:auto; margin-bottom:4px;">
+                    <strong style="color:#0d5db8; font-size:12px;">Dr. V.T Pawar</strong><br>
+                    <span style="font-size:11px;">M.V.Sc (Veterinary Pathology)</span><br>
+                    <span style="font-size:10px; color:#475569;">Reg.No : MSVC,3875</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- END PREGNANCY TEST REPORT -->
+
         </div>
       </div>
 
@@ -1946,12 +2061,15 @@
       const biochemicalContent = document.getElementById("biochemicalContent");
       const sensitivityContent = document.getElementById("sensitivityContent");
       const faecalContent = document.getElementById("faecalContent");
+      const pregnancyContent = document.getElementById("pregnancyContent");
       const isBiochemicalView = biochemicalContent && !biochemicalContent.classList.contains("hidden");
       const isSensitivityView = sensitivityContent && !sensitivityContent.classList.contains("hidden");
       const isFaecalView = faecalContent && !faecalContent.classList.contains("hidden");
+      const isPregnancyView = pregnancyContent && !pregnancyContent.classList.contains("hidden");
       const biochemOwnerInput = document.getElementById("biochemOwnerName");
       const sensitivityOwnerInput = document.getElementById("sensitivityOwnerName");
       const faecalOwnerInput = document.getElementById("faecalOwnerName");
+      const pregnancyOwnerInput = document.getElementById("pregOwnerName");
       const haemogramOwnerInput = document.getElementById("ownerName");
 
       if (isBiochemicalView && biochemOwnerInput) {
@@ -1964,6 +2082,10 @@
 
       if (isFaecalView && faecalOwnerInput) {
         return faecalOwnerInput.value.trim() || "lab_report";
+      }
+
+      if (isPregnancyView && pregnancyOwnerInput) {
+        return pregnancyOwnerInput.value.trim() || "lab_report";
       }
 
       if (haemogramOwnerInput) {
@@ -2221,7 +2343,7 @@
     }
 
     function resetHaemogramDefaults() {
-      const activeContent = document.querySelector("#haemogramContent:not(.hidden), #biochemicalContent:not(.hidden), #sensitivityContent:not(.hidden), #faecalContent:not(.hidden)");
+      const activeContent = document.querySelector("#haemogramContent:not(.hidden), #biochemicalContent:not(.hidden), #sensitivityContent:not(.hidden), #faecalContent:not(.hidden), #pregnancyContent:not(.hidden)");
       const resetTarget = activeContent || document.getElementById("haemogramReportSheet");
       resetTarget.querySelectorAll("input, select, textarea").forEach((input) => {
         if (input.tagName === "SELECT") {
@@ -2353,27 +2475,58 @@
       }
     }
 
+    function addPregRow() {
+      const tbody = document.getElementById("pregTestRows");
+      if (!tbody) return;
+      const rowCount = tbody.querySelectorAll(".preg-row").length + 1;
+      const tr = document.createElement("tr");
+      tr.className = "preg-row";
+      tr.innerHTML = `
+        <td style="padding:5px 10px; text-align:center; color:#475569; font-weight:600; border-bottom:1px solid #f1f5f9;">${rowCount}</td>
+        <td style="padding:5px 10px; border-bottom:1px solid #f1f5f9;">
+          <input type="text" class="live-edit preg-input" placeholder="Animal ID" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+        </td>
+        <td style="padding:5px 10px; border-bottom:1px solid #f1f5f9;">
+          <input type="text" class="live-edit preg-input" placeholder="Sample type" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+        </td>
+        <td style="padding:5px 10px; border-bottom:1px solid #f1f5f9;">
+          <input type="text" class="live-edit preg-input" placeholder="Positive / Negative" style="border:none; border-bottom:1px solid #cbd5e1; width:100%; font-size:12px; background:transparent; outline:none;" data-default-value="">
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+
     function openReport(type) {
       document.getElementById("landing").classList.add("hidden");
       document.getElementById("workspace").classList.remove("hidden");
 
-      const isHaemogram = type === "haemogram";
+      const isHaemogram   = type === "haemogram";
       const isBiochemical = type === "biochemical";
       const isSensitivity = type === "sensitivity";
-      const isFaecal = type === "faecal";
-      const haemogramContent = document.getElementById("haemogramContent");
+      const isFaecal      = type === "faecal";
+      const isPregnancy   = type === "pregnancy";
+
+      const haemogramContent   = document.getElementById("haemogramContent");
       const biochemicalContent = document.getElementById("biochemicalContent");
       const sensitivityContent = document.getElementById("sensitivityContent");
-      const faecalContent = document.getElementById("faecalContent");
-      const title = document.getElementById("reportTitleHeader");
+      const faecalContent      = document.getElementById("faecalContent");
+      const pregnancyContent   = document.getElementById("pregnancyContent");
+      const title    = document.getElementById("reportTitleHeader");
       const subtitle = document.getElementById("reportSubHeaderTitle");
 
-      if (haemogramContent) haemogramContent.classList.toggle("hidden", !isHaemogram);
+      if (haemogramContent)   haemogramContent.classList.toggle("hidden", !isHaemogram);
       if (biochemicalContent) biochemicalContent.classList.toggle("hidden", !isBiochemical);
       if (sensitivityContent) sensitivityContent.classList.toggle("hidden", !isSensitivity);
-      if (faecalContent) faecalContent.classList.toggle("hidden", !isFaecal);
+      if (faecalContent)      faecalContent.classList.toggle("hidden", !isFaecal);
+      if (pregnancyContent)   pregnancyContent.classList.toggle("hidden", !isPregnancy);
+
       const haemoNotes = document.getElementById("haemogramFooterNotes");
       if (haemoNotes) haemoNotes.classList.toggle("hidden", !isHaemogram);
+
+      // Hide the + Add Row button when not on pregnancy report
+      const addRowWrapper = document.querySelector(".preg-add-row-wrapper");
+      if (addRowWrapper) addRowWrapper.style.display = isPregnancy ? "flex" : "none";
+
       if (title) {
         title.textContent = isBiochemical
           ? "Biochemistry Report Live Editor"
@@ -2381,7 +2534,9 @@
             ? "Antibiotic Sensitivity Report Live Editor"
             : isFaecal
               ? "Faecal Examination Report Live Editor"
-              : "Haemogram (CBC) Live Editor";
+              : isPregnancy
+                ? "Pregnancy Test Report Live Editor"
+                : "Haemogram (CBC) Live Editor";
       }
       if (subtitle) {
         subtitle.textContent = isBiochemical
@@ -2390,7 +2545,20 @@
             ? "ANTIBIOTICS SENSITIVITY REPORT"
             : isFaecal
               ? "FAECAL STOOL EXAMINATION REPORT"
-              : "HAEMOGRAM - COMPLETE BLOOD COUNT (CBC)";
+              : isPregnancy
+                ? "PREGNANCY TEST REPORT"
+                : "HAEMOGRAM - COMPLETE BLOOD COUNT (CBC)";
+      }
+
+      if (isPregnancy) {
+        const today = new Date().toISOString().slice(0, 10);
+        const pregDate = document.getElementById("pregDate");
+        if (pregDate && !pregDate.value) pregDate.value = today;
+        const pregTimeEl = document.getElementById("pregReportGeneratedTime");
+        if (pregTimeEl) pregTimeEl.textContent = `Report Generated: ${new Date().toLocaleString()}`;
+        // Sync logo
+        const logoPreg = document.getElementById("labLogoPregnancy");
+        if (logoPreg && labLogo && labLogo.src) logoPreg.src = labLogo.src;
       }
 
       setupEventListeners();
